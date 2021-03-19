@@ -1,0 +1,33 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+autopep8 = "*"
+
+[packages]
+python-decouple = "==3.1"
+pytz = "==2018.5"
+django-extensions = "==2.0.7"
+six = "==1.14.0"
+typing = "==3.6.4"
+django = "==3.1.7"
+factory-boy = "*"
+djangorestframework = "==3.12.2"
+markdown = "~=3.0.0"
+django-cors-headers = "*"
+django-environ = "*"
+gunicorn = "*"
+celery = "==4.4.2"
+redis = "*"
+django-celery-beat = "*"
+coverage = "*"
+django-celery-results = "*"
+ipython = "*"
+pyyaml = "*"
+coreapi = "~=1.32.0"
+djangorestframework-simplejwt = "*"
+
+[requires]
+python_version = "3.8"
