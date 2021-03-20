@@ -25,6 +25,7 @@ INSTALLED_APPS = [
 # Third Party apps
 INSTALLED_APPS += [
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     'django_celery_beat',
     'django_celery_results',
@@ -34,7 +35,8 @@ INSTALLED_APPS += [
 # Project apps
 INSTALLED_APPS += [
     'accounts.apps.AccountsConfig',
-    'shared.apps.SharedConfig'
+    'shared.apps.SharedConfig',
+    'receipts.apps.ReceiptsConfig',
 ]
 
 MIDDLEWARE = [
@@ -160,3 +162,14 @@ FIXTURES = []
 
 # Environment
 ENVIRONMENT = config('ENVIRONMENT')
+
+
+# REST_FRAMEWORK
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAdminUser',
+    )
+}

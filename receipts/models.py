@@ -1,0 +1,55 @@
+from uuid import uuid4
+
+from django.conf import settings
+from django.db import models
+from django.utils.functional import cached_property
+
+
+class Receipt(models.Model):
+    """Payment receipt"""
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid4)
+    seller = models.CharField('seller name', max_length=120)
+    buyer = models.CharField('buyer name', max_length=255)
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='receipts'
+    )
+    date = models.DateField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('-date', )
+
+    def __str__(self):
+        return self.buyer
+
+    @cached_property
+    def total(self):
+        """Returns the total monetary amount of all related items."""
+        result = sum(item.amount for item in self.items.all())
+        return round(result, 2)
+
+
+class ReceiptItem(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid4)
+    receipt = models.ForeignKey(
+        Receipt,
+        on_delete=models.CASCADE,
+        related_name='items'
+    )
+    service = models.CharField(max_length=255)
+    unit = models.CharField(max_length=100, help_text='Unit of measurement.')
+    rate = models.DecimalField('unit rate', max_digits=10, decimal_places=2)
+    quantity = models.DecimalField(max_digits=10, decimal_places=2)
+
+    class Meta:
+        verbose_name ='Receipt Item'
+        verbose_name_plural = 'Receipt Items'
+
+    def __str__(self):
+        return self.service
+
+    @cached_property
+    def amount(self):
+        """Returns the monentary amount of the item."""
+        return round(self.rate * self.quantity, 2)
