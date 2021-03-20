@@ -1,3 +1,5 @@
+from django.http import HttpResponse
+
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -16,8 +18,19 @@ class ReceiptViewSet(viewsets.ModelViewSet):
         return qs.filter(owner=self.request.user)
 
     def create(self, request, *args, **kwargs):
-        serializer = ReceiptSerializer(many=True, data=request.data)
+        serializer = ReceiptSerializer(
+            many=True,
+            data=request.data,
+            context={'request': request}
+        )
         if serializer.is_valid():
             serializer.save(owner=request.user)
             return Response(serializer.data, status=HTTP_201_CREATED)
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+    @action(detail=True)
+    def download(self, request, *args, **kwargs):
+        receipt = self.get_object()
+        response = HttpResponse(receipt.pdf_file, content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="Receipt.pdf"'
+        return response

@@ -28,6 +28,7 @@ ipython = "*"
 pyyaml = "*"
 coreapi = "~=1.32.0"
 djangorestframework-simplejwt = "*"
+weasyprint = "*"
 
 [requires]
 python_version = "3.8"

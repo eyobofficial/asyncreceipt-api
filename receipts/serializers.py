@@ -7,16 +7,20 @@ class ReceiptItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ReceiptItem
-        fields = ['id', 'service', 'unit', 'rate', 'quantity', 'amount']
+        fields = ('id', 'service', 'unit', 'rate', 'quantity', 'amount')
 
 
-class ReceiptSerializer(serializers.ModelSerializer):
+class ReceiptSerializer(serializers.HyperlinkedModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     items = ReceiptItemSerializer(many=True)
+    pdf = serializers.HyperlinkedIdentityField(view_name='receipt-download')
 
     class Meta:
         model = Receipt
-        fields = ['id', 'seller', 'buyer', 'owner', 'date', 'items', 'total']
+        fields = (
+            'id', 'url', 'seller', 'buyer',
+            'owner', 'date', 'items', 'total', 'pdf'
+        )
 
     def create(self, validated_data):
         """Creates multiple receipt item instances."""
@@ -25,6 +29,7 @@ class ReceiptSerializer(serializers.ModelSerializer):
         ReceiptItem.objects.bulk_create(
             [ReceiptItem(receipt=obj, **item) for item in items]
         )
+        obj.generate_pdf()
         return obj
 
     def update(self, instance, validated_data):
@@ -40,4 +45,5 @@ class ReceiptSerializer(serializers.ModelSerializer):
             [ReceiptItem(receipt=instance, **item) for item in items]
         )
 
+        instance.generate_pdf()
         return instance

@@ -1,8 +1,14 @@
+from io import BytesIO
 from uuid import uuid4
 
 from django.conf import settings
+from django.core.files.base import ContentFile
 from django.db import models
+from django.shortcuts import render
+from django.template.loader import get_template
 from django.utils.functional import cached_property
+
+from weasyprint import HTML
 
 
 class Receipt(models.Model):
@@ -14,6 +20,10 @@ class Receipt(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='receipts'
+    )
+    pdf_file = models.FileField(
+        upload_to='receipts/',
+        null=True, blank=True
     )
     date = models.DateField(auto_now_add=True)
 
@@ -28,6 +38,14 @@ class Receipt(models.Model):
         """Returns the total monetary amount of all related items."""
         result = sum(item.amount for item in self.items.all())
         return round(result, 2)
+
+    def generate_pdf(self):
+        """Generate a PDF file of the receipt."""
+        template = get_template('receipts/placeholder.html')
+        context = {'receipt': self}
+        html = template.render(context)
+        pdf_file = HTML(string=html).write_pdf()
+        self.pdf_file.save('test.pdf', ContentFile(pdf_file), save=True)
 
 
 class ReceiptItem(models.Model):
