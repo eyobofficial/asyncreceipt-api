@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from .models import Receipt, ReceiptItem
+from .tasks import generate_receipt_pdf
 
 
 class ReceiptItemSerializer(serializers.ModelSerializer):
@@ -29,7 +30,7 @@ class ReceiptSerializer(serializers.HyperlinkedModelSerializer):
         ReceiptItem.objects.bulk_create(
             [ReceiptItem(receipt=obj, **item) for item in items]
         )
-        obj.generate_pdf()
+        generate_receipt_pdf.delay(obj.pk)  # Asychronous celery task
         return obj
 
     def update(self, instance, validated_data):
@@ -44,6 +45,5 @@ class ReceiptSerializer(serializers.HyperlinkedModelSerializer):
         ReceiptItem.objects.bulk_create(
             [ReceiptItem(receipt=instance, **item) for item in items]
         )
-
-        instance.generate_pdf()
+        generate_receipt_pdf.delay(instance.pk)  # Asychronous celery task
         return instance

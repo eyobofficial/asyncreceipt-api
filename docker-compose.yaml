@@ -15,15 +15,7 @@ services:
       - static_volume:/code/staticfiles
       - media_volume:/code/mediafiles
     depends_on:
-      - db
       - redis-server
-  db:
-    image: mysql:5.7
-    restart: always
-    env_file:
-      - ./.env
-    volumes:
-      - mysql_data:/var/lib/mysql
   nginx:
     build:
       context: ./nginx
@@ -51,7 +43,6 @@ services:
       - ./.env
     depends_on:
       - redis-server
-      - db
       - web
   celery-beat:
     build: .
@@ -61,11 +52,9 @@ services:
       - ./.env
     depends_on:
       - web
-      - db
       - celery
 
 volumes:
-  mysql_data:
   static_volume:
   media_volume:
 

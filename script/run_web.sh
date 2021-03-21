@@ -1,13 +1,5 @@
 #!/bin/bash
 
-# Check if database is ready
-echo 'Waiting for database....'
-while ! nc -z $DB_HOST $DB_PORT; do
-    sleep 1s
-done
-
-echo 'Database is ready.'
-
 # Prepare app
 echo 'Run migrations...'
 python manage.py makemigrations   # TODO: Remove in production code

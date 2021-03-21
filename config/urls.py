@@ -23,7 +23,8 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('', TemplateView.as_view(template_name='shared/default.html')),
     path('api/', include('receipts.urls')),
-    path('admin/', admin.site.urls)
+    path('admin/', admin.site.urls),
+    path('api-auth', include('rest_framework.urls')),
 ]
 
 # Media Assets
