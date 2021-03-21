@@ -4,11 +4,13 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
+from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST, \
+    HTTP_404_NOT_FOUND
 
 from .models import Receipt
 from .serializers import ReceiptSerializer
 from .permissions import IsReceiptOwner
+
 
 class ReceiptViewSet(viewsets.ModelViewSet):
     queryset = Receipt.objects.all()
@@ -33,6 +35,10 @@ class ReceiptViewSet(viewsets.ModelViewSet):
     @action(detail=True)
     def download(self, request, *args, **kwargs):
         receipt = self.get_object()
+        if not receipt.pdf_file:
+            return Response({
+                'Not Found:': 'Your receipt is being generated. Try again later.'
+            }, status=HTTP_404_NOT_FOUND)
         response = HttpResponse(receipt.pdf_file, content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename="Receipt.pdf"'
         return response

@@ -15,6 +15,7 @@ SECRET_KEY = config('SECRET_KEY')
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.humanize',
     'django.contrib.sessions',
@@ -30,6 +31,11 @@ INSTALLED_APPS += [
     'corsheaders',
     'django_celery_beat',
     'django_celery_results',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'rest_auth',
+    'rest_auth.registration',
 ]
 
 
@@ -116,6 +122,10 @@ USE_L10N = True
 USE_TZ = True
 
 
+# Sites Framework
+SITE_ID = 1
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
@@ -133,6 +143,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
 # Custom Auth User Model
 AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
+# EMAIL
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
 
 # Cors Headers

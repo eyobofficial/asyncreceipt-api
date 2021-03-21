@@ -45,7 +45,7 @@ class Receipt(models.Model):
         context = {'receipt': self}
         html = template.render(context)
         pdf_file = HTML(string=html).write_pdf()
-        self.pdf_file.save('test.pdf', ContentFile(pdf_file), save=True)
+        self.pdf_file.save('receipt.pdf', ContentFile(pdf_file), save=True)
 
 
 class ReceiptItem(models.Model):

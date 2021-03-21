@@ -6,6 +6,6 @@ from .views import ReceiptViewSet
 
 
 router = routers.DefaultRouter()
-router.register(r'receipts', ReceiptViewSet)
+router.register(r'', ReceiptViewSet)
 
 urlpatterns = router.urls
