@@ -30,6 +30,8 @@ coreapi = "~=1.32.0"
 djangorestframework-simplejwt = "*"
 WeasyPrint = "*"
 django-allauth = "*"
+boto3 = "*"
+django-storages = "*"
 
 [requires]
 python_version = "3.8"
