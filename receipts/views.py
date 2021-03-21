@@ -2,16 +2,18 @@ from django.http import HttpResponse
 
 from rest_framework import viewsets
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 
 from .models import Receipt
 from .serializers import ReceiptSerializer
-
+from .permissions import IsReceiptOwner
 
 class ReceiptViewSet(viewsets.ModelViewSet):
     queryset = Receipt.objects.all()
     serializer_class = ReceiptSerializer
+    permission_classes = [IsAuthenticated, IsReceiptOwner]
 
     def get_queryset(self):
         qs = super().get_queryset()
