@@ -1,0 +1,148 @@
+{% load static humanize %}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Receipt</title>
+    <meta name="description" content="Invoice demo sample">
+    <meta name="author" content="Kozea">
+    <style media="print">
+      @charset "UTF-8";
+      @import url("https://fonts.googleapis.com/css?family=Pacifico|Source+Sans+Pro:400,700");
+      @page {
+        margin: 3cm;
+      }
+      html {
+        color: #14213d;
+        font-family: Source Sans Pro;
+        font-size: 11pt;
+        line-height: 1.6;
+      }
+      html body {
+        margin: 0;
+      }
+      html h1 {
+        color: #1ee494;
+        font-family: Pacifico;
+        font-size: 40pt;
+        margin: 0;
+      }
+      html aside {
+        display: flex;
+        margin: 2em 0 4em;
+      }
+      html aside address {
+        font-style: normal;
+        white-space: pre-line;
+      }
+      html aside address#from {
+        color: #a9a;
+        flex: 1;
+      }
+      html aside address#to {
+        text-align: right;
+      }
+      html dl {
+        text-align: right;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+      html dl dt, html dl dd {
+        display: inline;
+        margin: 0;
+      }
+      html dl dt {
+        color: #a9a; 
+      }
+      html dl dt::before {
+        content: '';
+        display: block;
+      }
+      html dl dt::after {
+        content: ':';
+      }
+      html table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      html table th {
+        border-bottom: .2mm solid #a9a;
+        color: #a9a;
+        font-size: 10pt;
+        font-weight: 400;
+        padding-bottom: .25cm;
+        text-transform: uppercase;
+      }
+      html table td {
+        padding-top: 7mm;
+      }
+      html table td:last-of-type {
+        color: #1ee494;
+        font-weight: bold;
+        text-align: right;
+      }
+      html table th, html table td {
+        text-align: center;
+      }
+      html table th:first-of-type,
+      html table td:first-of-type {
+        text-align: left;
+      }
+      html table th:last-of-type,
+      html table td:last-of-type {
+        text-align: right;
+      }
+      html table tr#total td {
+        font-size: 16pt;
+        text-align: right;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Receipt</h1>
+
+    <aside>
+      <address id="from">
+        <strong>From: </strong>
+        {{ receipt.seller }}
+      </address>
+
+      <address id="to">
+        <strong>To: </strong>
+        {{ receipt.buyer }}
+      </address>
+    </aside>
+
+    <dl id="informations">
+      <dt>Date</dt>
+      <dd>{{ receipt.date|date:'M d, Y' }}</dd>
+    </dl>
+
+    <table>
+      <thead>
+        <th>Service</th>
+        <th>Unit</th>
+        <th>Quantity</th>
+        <th>Rate</th>
+        <th>Amount</th>
+      </thead>
+      <tbody>
+        {% for item in receipt.items.all %}
+        <tr>
+          <td>{{ item.service }}</td>
+          <td>{{ item.unit }}</td>
+          <td>{{ item.quantity|intcomma }}</td>
+          <td>&dollar;{{ item.rate|intcomma }}</td>
+          <td>&dollar;{{ item.amount|intcomma }}</td>
+        </tr>
+        {% endfor %}
+        <tr id="total">
+          <td colspan="4">Total</td>
+          <td>&dollar;{{ receipt.total|intcomma }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

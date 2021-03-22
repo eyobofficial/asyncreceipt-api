@@ -18,12 +18,18 @@ services:
       - db
       - redis-server
   db:
-    image: mysql:5.7
+    image: postgres:12.0-alpine
     restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env
-    volumes:
-      - mysql_data:/var/lib/mysql
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - ${DB_PORT}:5432
   nginx:
     build:
       context: ./nginx
@@ -49,9 +55,11 @@ services:
     restart: always
     env_file:
       - ./.env
+    volumes:
+      - media_volume:/code/mediafiles
     depends_on:
-      - redis-server
       - db
+      - redis-server
       - web
   celery-beat:
     build: .
@@ -60,12 +68,11 @@ services:
     env_file:
       - ./.env
     depends_on:
-      - web
       - db
+      - web
       - celery
 
 volumes:
-  mysql_data:
+  postgres_data:
   static_volume:
   media_volume:
-
