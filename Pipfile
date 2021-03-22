@@ -32,6 +32,7 @@ WeasyPrint = "*"
 django-allauth = "*"
 boto3 = "*"
 django-storages = "*"
+psycopg2-binary = "==2.8.5"
 
 [requires]
 python_version = "3.8"

@@ -14,9 +14,22 @@ services:
     volumes:
       - static_volume:/code/staticfiles
       - media_volume:/code/mediafiles
-      - ./sqlite3.db:/code/sqlite3.db
     depends_on:
+      - db
       - redis-server
+  db:
+    image: postgres:12.0-alpine
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - ${DB_PORT}:5432
   nginx:
     build:
       context: ./nginx
@@ -29,7 +42,6 @@ services:
     volumes:
       - static_volume:/code/staticfiles
       - media_volume:/code/mediafiles
-      - ./sqlite3.db:/code/sqlite3.db
     depends_on:
       - web
   redis-server:
@@ -45,8 +57,8 @@ services:
       - ./.env
     volumes:
       - media_volume:/code/mediafiles
-      - ./sqlite3.db:/code/sqlite3.db
     depends_on:
+      - db
       - redis-server
       - web
   celery-beat:
@@ -56,9 +68,11 @@ services:
     env_file:
       - ./.env
     depends_on:
+      - db
       - web
       - celery
 
 volumes:
+  postgres_data:
   static_volume:
   media_volume:

@@ -5,6 +5,19 @@ DEBUG = False
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
+# POSTRESQL DATABASE
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT')
+    }
+}
+
+
 # AWS S3
 AWS_STORAGE_BUCKET_NAME = 'receipt-api-staging'
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
