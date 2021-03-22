@@ -11,7 +11,6 @@ BASE_DIR = Path(__file__) - 3
 SECRET_KEY = config('SECRET_KEY')
 
 
-
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -48,7 +47,7 @@ INSTALLED_APPS += [
 ]
 
 
-
+# Middlewares
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -161,10 +160,6 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
-
-
-# Start-up fixtures
-FIXTURES = []
 
 
 # Environment
