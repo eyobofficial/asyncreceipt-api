@@ -13,7 +13,7 @@ DATABASES['default'].update(db_from_env)
 
 # Celery
 CELERY_BROKER_URL = config('REDIS_URL')
-CELERY_RESULT_BACKEND = config('REDIS_URL')
+CELERY_RESULT_BACKEND = 'django-db'
 
 
 # AWS S3
