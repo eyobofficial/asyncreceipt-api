@@ -36,13 +36,13 @@ INSTALLED_APPS += [
     'allauth.socialaccount',
     'rest_auth',
     'rest_auth.registration',
+    'drf_yasg',
 ]
 
 
 # Project apps
 INSTALLED_APPS += [
     'accounts.apps.AccountsConfig',
-    'shared.apps.SharedConfig',
     'receipts.apps.ReceiptsConfig',
 ]
 
@@ -169,10 +169,21 @@ ENVIRONMENT = config('ENVIRONMENT')
 # REST_FRAMEWORK
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAdminUser',
     )
+}
+
+
+# Swagger
+SWAGGER_SETTINGS = {
+   'SECURITY_DEFINITIONS': {
+      'Token': {
+            'type': 'key',
+            'name': 'Authorization',
+            'in': 'header'
+      }
+   }
 }

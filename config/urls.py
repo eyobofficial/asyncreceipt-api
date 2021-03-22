@@ -17,16 +17,42 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-
 from django.views.generic import TemplateView
 
+from rest_framework import permissions, authentication
+
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Receipts API",
+      default_version='v1.0.0',
+      description=(
+          'RESTful API for generating multiple receipts asynchronously for ' \
+          'authenticated and authorized users. Receipts are generated in '\
+          'JSON and PDF formats.'
+      ),
+      contact=openapi.Contact(email="hello@eyob.tech"),
+      license=openapi.License(name="BSD License"),
+   ),
+   public=True,
+   permission_classes=[permissions.AllowAny]
+)
+
+
+# Schema URLS
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='shared/default.html')),
+    path('', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+]
+
+# Root URLs
+urlpatterns += [
     path('receipts/', include('receipts.urls')),
     path('admin/', admin.site.urls),
     path('auth/', include('rest_auth.urls')),
     path('auth/register/', include('rest_auth.registration.urls')),
-    path('api-auth', include('rest_framework.urls')),
 ]
 
 # Media Assets
