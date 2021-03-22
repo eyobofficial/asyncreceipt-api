@@ -18,6 +18,10 @@ DATABASES = {
     }
 }
 
+# Celery
+CELERY_BROKER_URL = config('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = config('CELERY_BROKER_URL')
+
 
 # AWS S3
 AWS_STORAGE_BUCKET_NAME = 'receipt-api-production'
