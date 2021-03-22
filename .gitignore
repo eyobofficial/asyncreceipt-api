@@ -248,3 +248,4 @@ deploy_key
 /temp
 celerybeat.pid
 *.db
+*.bak
