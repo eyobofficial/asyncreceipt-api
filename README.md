@@ -9,15 +9,25 @@ A Python/Django RESTful API for generating receipts for authenticated and author
 ## Packages
 - Django 3.1.7
 - Django REST Framework 3.12.2
+- WeasyPrint
 - Gunicorn
 - Celery
 - Python Decouple
 - Django Environ
-- Pendulum
+- boto3
+- django-rest-auth
+- djang-allauth
+
+## Databases
+- SQLite3 (Development)
+- PostgreSQL (Production & Staging)
 
 ## DevOps Tools
-- Travis CI
 - Docker
+
+# Deployment Platforms
+- Heroku
+- AWS S3 (Static and media assets)
 
 ## Instruction on How to Run the Receipt Generating API locally
 
