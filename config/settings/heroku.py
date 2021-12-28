@@ -37,3 +37,7 @@ STATICFILES_STORAGE = 'config.storage_backends.S3StaticStorage'
 MEDIA_LOCATION = 'mediafiles'
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
 DEFAULT_FILE_STORAGE = 'config.storage_backends.S3MediaStorage'
+
+
+# Environments
+ENVIRONMENT = 'HEROKU'

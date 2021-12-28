@@ -3,7 +3,7 @@ services:
   web:
     build: .
     command: bash script/run_web.sh
-    restart: always
+    restart: on-failure
     env_file:
       - ./.env
     environment:
@@ -19,22 +19,22 @@ services:
       - redis-server
   db:
     image: postgres:12.0-alpine
-    restart: always
+    restart: on-failure
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env
     environment:
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${RDS_USERNAME}
+      - POSTGRES_PASSWORD=${RDS_PASSWORD}
+      - POSTGRES_DB=${RDS_DB_NAME}
     ports:
-      - ${DB_PORT}:5432
+      - ${RDS_PORT}:5432
   nginx:
     build:
       context: ./nginx
       dockerfile: Dockerfile
-    restart: always
+    restart: on-failure
     env_file:
       - ./.env
     ports:
@@ -52,7 +52,7 @@ services:
   celery:
     build: .
     command: celery worker -A config -l info
-    restart: always
+    restart: on-failure
     env_file:
       - ./.env
     volumes:
@@ -64,7 +64,7 @@ services:
   celery-beat:
     build: .
     command: celery beat -A config -l info
-    restart: always
+    restart: on-failure
     env_file:
       - ./.env
     depends_on:
