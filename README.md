@@ -3,7 +3,7 @@ A Python/Django RESTful API for generating receipts for authenticated and author
 
 ## Requirements
 - Python 3.8
-- Pipenv
+- virtualenv
 - Redis
 
 ## Packages
@@ -50,7 +50,7 @@ Wait until the container build is complete. Now your endpoints should be availab
 
 
 ### Method 2: Manual Installation
-Make sure you have Python 3.8, Pipenv, and Redis installed.
+Make sure you have Python 3.8, virtualenv, and Redis installed.
 
 **MacOS and Linux**
 Steps:
@@ -62,13 +62,13 @@ $ cd <repo-directory>
 2. Copy the `.env.example` file to `.env` file. Change the values in the file accordingly.
 3. Create and activate a new python virtual enviroment using the following command:
 ```
-$ pipenv shell
+$ virtualenv --python=python3.8 venv
 ```
-4. Run the following commands:
+4. To install all dependencies and setup your local database, run the following commands
 ```
-$ pipenv install
-$ python manage.py migrate --no-input
-$ python manage.py runserver 0.0.0.0:8000
+(venv)$ pip install -r requirements.txt
+(venv)$ python manage.py migrate --no-input
+(venv)$ python manage.py runserver 0.0.0.0:8000
 ```
 
 5. Start your redis server
