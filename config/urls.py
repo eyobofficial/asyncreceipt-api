@@ -27,13 +27,14 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="Receipts API",
+      title="Async Receipts API",
       default_version='v1.0.0',
-      description=(
-          'RESTful API for generating multiple receipts asynchronously for ' \
-          'authenticated and authorized users. Receipts are generated in '\
-          'JSON and PDF formats.'
-      ),
+      description="""
+          # Overview
+          A collection of RESTful API endpoints for generating multiple receipts
+          asynchronously for authenticated and authorized users. Receipts are generated in
+          JSON and PDF formats.
+      """,
       contact=openapi.Contact(email="hello@eyob.tech"),
       license=openapi.License(name="BSD License"),
    ),
@@ -51,8 +52,7 @@ urlpatterns = [
 urlpatterns += [
     path('receipts/', include('receipts.urls')),
     path('admin/', admin.site.urls),
-    path('auth/', include('rest_auth.urls')),
-    path('auth/register/', include('rest_auth.registration.urls')),
+    path('accounts/', include('accounts.urls')),
 ]
 
 # Media Assets

@@ -244,6 +244,7 @@ deploy_key
 /media
 /mediafiles
 /staticfiles
+/node_modules
 /logs
 /temp
 celerybeat.pid
