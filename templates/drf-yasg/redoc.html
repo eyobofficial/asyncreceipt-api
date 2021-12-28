@@ -1,0 +1,41 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"> <!-- Important: rapi-doc uses utf8 charecters -->
+    <title>Asynchronous Receipt Generator | API</title>
+    <script type="module" src="https://unpkg.com/rapidoc/dist/rapidoc-min.js"></script>
+    <style>
+        [slot=nav-logo] {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+  </head>
+  <body>
+    <rapi-doc
+      spec-url="{% url 'schema-redoc' %}"
+      regular-font="Open Sans"
+      mono-font="Roboto Mono"
+      theme="light"
+      bg-color="#f9f9fa"
+      text-color=""
+      nav-bg-color="#3f4d67"
+      nav-hover-bg-color="#333f54"
+      nav-hover-text-color="#fff"
+      nav-accent-color="#f44236"
+      primary-color="#5c7096"
+      render-style="focused"
+      show-header="false"
+      show-info="true"
+      schema-style="table"
+      schema-expand-level="1"
+      schema-description-expanded="true">
+      <div slot="nav-logo">
+        <img height="50" color="#ffffff" src="{% static 'logo.png' %}"/>&nbsp;
+        <span style="font-size: 22px; font-weight: 600; color: #cccccc;">Receipts</span>
+      </div>
+    </rapi-doc>
+  </body>
+</html>
