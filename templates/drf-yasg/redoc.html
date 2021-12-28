@@ -3,21 +3,25 @@
 <html>
   <head>
     <meta charset="utf-8"> <!-- Important: rapi-doc uses utf8 charecters -->
-    <title>Asynchronous Receipt Generator | API</title>
+    <title>Receipt API | Documentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Source+Code+Pro:wght@400;500&family=Vujahday+Script&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/rapidoc/dist/rapidoc-min.js"></script>
     <style>
         [slot=nav-logo] {
             display: flex;
             justify-content: center;
             align-items: center;
+            font-family: 'Vujahday Script', cursive;
         }
     </style>
   </head>
   <body>
     <rapi-doc
       spec-url="{% url 'schema-redoc' %}"
-      regular-font="Open Sans"
-      mono-font="Roboto Mono"
+      regular-font="Lato"
+      mono-font="Source Code Pro"
       theme="light"
       bg-color="#f9f9fa"
       text-color=""
@@ -34,7 +38,7 @@
       schema-description-expanded="true">
       <div slot="nav-logo">
         <img height="50" color="#ffffff" src="{% static 'logo.png' %}"/>&nbsp;
-        <span style="font-size: 22px; font-weight: 600; color: #cccccc;">Receipts</span>
+        <span style="font-size: 32px; font-weight: 600; color: #cccccc;">Receipts</span>
       </div>
     </rapi-doc>
   </body>
