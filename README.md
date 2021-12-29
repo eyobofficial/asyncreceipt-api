@@ -1,5 +1,9 @@
-# Receipt Generator API
-A Python/Django RESTful API for generating receipts for authenticated and authorized users.
+# Aync Receipts
+
+![Banner](thumbnails/01.png)
+
+## An Asynchronous Receipts Generator API
+A collection of Python/Django RESTful API for generating receipts for authenticated and authorized users.
 
 ## Requirements
 - Python 3.8
