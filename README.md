@@ -11,7 +11,7 @@ A collection of Python/Django RESTful API for generating receipts for authentica
 - Redis
 
 ## Packages
-- Django 3.1.7
+- Django 3.2.7
 - Django REST Framework 3.12.2
 - WeasyPrint
 - Gunicorn
@@ -23,8 +23,7 @@ A collection of Python/Django RESTful API for generating receipts for authentica
 - djang-allauth
 
 ## Databases
-- SQLite3 (Development)
-- PostgreSQL (Production & Staging)
+- PostgreSQL
 
 ## DevOps Tools
 - Docker
