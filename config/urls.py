@@ -24,17 +24,14 @@ from rest_framework import permissions, authentication
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
+from .api_info import description
+
 
 schema_view = get_schema_view(
    openapi.Info(
       title="Async Receipts API",
       default_version='v1.0.0',
-      description="""
-          # Overview
-          A collection of RESTful API endpoints for generating multiple receipts
-          asynchronously for authenticated and authorized users. Receipts are generated in
-          JSON and PDF formats.
-      """,
+      description=description,
       contact=openapi.Contact(email="hello@eyob.tech"),
       license=openapi.License(name="BSD License"),
    ),
