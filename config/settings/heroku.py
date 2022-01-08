@@ -3,7 +3,7 @@ from .base import *
 
 
 DEBUG = False
-ALLOWED_HOSTS = ['.receipts-generator-api.herokuapp.com', '.asynreceipt.com']
+ALLOWED_HOSTS = ['.receipts-generator-api.herokuapp.com', '.asyncreceipt.com']
 
 
 # POSTRESQL DATABASE
